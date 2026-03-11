@@ -1,0 +1,220 @@
+import java.util.List;
+import java.util.ArrayList;
+
+/* =========================
+   ENUM TIPO DE SOLICITUD
+   ========================= */
+enum TipoSolicitud {
+    MEDICAMENTO,
+    PROCEDIMIENTO_AMBULATORIO,
+    URGENCIAS,
+    EXAMEN_DIAGNOSTICO
+}
+
+/* =========================
+   ENUM ESTADO DE SOLICITUD
+   ========================= */
+enum EstadoSolicitud {
+    DRAFT,
+    SUBMITTED,
+    UNDER_REVIEW,
+    APPROVED,
+    REJECTED
+}
+
+/* =========================
+   CLASE PACIENTE
+   ========================= */
+class Paciente {
+
+    private String id;
+    private int edad;
+
+    public Paciente(String id, int edad) {
+        this.id = id;
+        this.edad = edad;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+}
+
+/* =========================
+   CLASE PRESTADOR
+   ========================= */
+class Prestador {
+
+    private String id;
+    private String nombre;
+    private boolean habilitado;
+
+    public Prestador(String id, String nombre, boolean habilitado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.habilitado = habilitado;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public boolean isHabilitado() {
+        return habilitado;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
+    }
+}
+
+/* =========================
+   CLASE DOCUMENTO
+   ========================= */
+class Documento {
+
+    private String tipoDocumento;
+    private String nombreArchivo;
+
+    public Documento(String tipoDocumento, String nombreArchivo) {
+        this.tipoDocumento = tipoDocumento;
+        this.nombreArchivo = nombreArchivo;
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+}
+
+/* =========================
+   CLASE SOLICITUD
+   ========================= */
+class Solicitud {
+
+    private String id;
+    private TipoSolicitud tipoSolicitud;
+    private double valorSolicitado;
+    private String fechaEvento;
+    private List<Documento> documentos;
+    private Paciente paciente;
+    private Prestador prestador;
+    private EstadoSolicitud estadoActual;
+
+    public Solicitud(String id, TipoSolicitud tipoSolicitud, double valorSolicitado,
+                     String fechaEvento, List<Documento> documentos,
+                     Paciente paciente, Prestador prestador) {
+
+        this.id = id;
+        this.tipoSolicitud = tipoSolicitud;
+        this.valorSolicitado = valorSolicitado;
+        this.fechaEvento = fechaEvento;
+        this.documentos = documentos;
+        this.paciente = paciente;
+        this.prestador = prestador;
+        this.estadoActual = EstadoSolicitud.DRAFT;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public TipoSolicitud getTipoSolicitud() {
+        return tipoSolicitud;
+    }
+
+    public double getValorSolicitado() {
+        return valorSolicitado;
+    }
+
+    public String getFechaEvento() {
+        return fechaEvento;
+    }
+
+    public List<Documento> getDocumentos() {
+        return documentos;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public Prestador getPrestador() {
+        return prestador;
+    }
+
+    public EstadoSolicitud getEstadoActual() {
+        return estadoActual;
+    }
+
+    public void setEstadoActual(EstadoSolicitud estadoActual) {
+        this.estadoActual = estadoActual;
+    }
+}
+
+/* =========================
+   CLASE PRINCIPAL (EJEMPLO)
+   ========================= */
+public class Main {
+
+    public static void main(String[] args) {
+
+        Paciente paciente = new Paciente("123", 35);
+
+        Prestador prestador = new Prestador("P001", "Clinica Central", true);
+
+        List<Documento> documentos = new ArrayList<>();
+        documentos.add(new Documento("Factura", "factura123.pdf"));
+        documentos.add(new Documento("FormulaMedica", "formula.pdf"));
+
+        Solicitud solicitud = new Solicitud(
+                "S001",
+                TipoSolicitud.MEDICAMENTO,
+                250000,
+                "2026-03-01",
+                documentos,
+                paciente,
+                prestador
+        );
+
+        System.out.println("Solicitud creada:");
+        System.out.println("ID: " + solicitud.getId());
+        System.out.println("Tipo: " + solicitud.getTipoSolicitud());
+        System.out.println("Estado: " + solicitud.getEstadoActual());
+    }
+}
